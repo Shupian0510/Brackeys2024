@@ -44,20 +44,21 @@ public class Character : MonoBehaviour
         );
 
         var ray = new Ray(camTrans.position, camTrans.forward);
-        if (Physics.Raycast(ray, out var hitInfo, InteractDistanceLimit))
+        if (
+            Physics.Raycast(ray, out var hitInfo, InteractDistanceLimit)
+            && hitInfo.transform.TryGetComponent<EventObject>(out var e)
+            && e.IsEventOn
+        )
         {
-            if (hitInfo.transform.TryGetComponent<EventObject>(out var obj))
+            InteractionText.Instance.Show = true;
+            if (Input.GetMouseButtonDown(0))
             {
-                print($"Find event: {obj.IsEventOn}");
-                if (Input.GetMouseButtonDown(0))
-                {
-                    obj.SetEventOff();
-                }
+                e.SetEventOff();
             }
         }
         else
         {
-            print("None");
+            InteractionText.Instance.Show = false;
         }
     }
 }
