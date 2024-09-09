@@ -8,9 +8,8 @@ public class EventObject : MonoBehaviour
     public event UnityAction OnEventHappening;
     public event UnityAction OnHandleEvent;
 
-    public bool IsEventOn => eventOn;
-
     private bool eventOn = false;
+    public bool IsEventOn => eventOn;
 
     public void SetEventOn()
     {

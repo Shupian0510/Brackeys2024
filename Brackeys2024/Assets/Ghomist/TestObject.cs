@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// Test only
-/// Example for using class "EventObject"
+/// Example of using class "EventObject"
 /// </summary>
 [RequireComponent(typeof(EventObject))]
 public class TestObject : MonoBehaviour
