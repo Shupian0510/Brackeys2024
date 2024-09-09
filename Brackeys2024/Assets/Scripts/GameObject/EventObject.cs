@@ -11,6 +11,8 @@ public class EventObject : MonoBehaviour
     private bool eventOn = false;
     public bool IsEventOn => eventOn;
 
+    private void Start() => EventManager.Instance.RegisterEventObject(this);
+
     public void SetEventOn()
     {
         eventOn = true;
