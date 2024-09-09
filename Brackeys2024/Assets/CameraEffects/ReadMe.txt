@@ -1,1 +1,0 @@
-To use these effects add the scripts in Script to the Main Camera on player. They will be visible only from the game windor.
