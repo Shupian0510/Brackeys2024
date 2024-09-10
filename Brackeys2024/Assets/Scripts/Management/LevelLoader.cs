@@ -9,12 +9,12 @@ public class LevelLoader : MonoBehaviour
 
     public float transitionTime = 1f;
 
-    void Update()
+    /*void Update()
     {
         if(Input.GetMouseButton(0)) {
             LoadNextLevel();
         }
-    }
+    }*/
 
     public void LoadNextLevel()
     {
