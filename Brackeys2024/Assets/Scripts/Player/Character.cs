@@ -5,12 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Character : MonoBehaviour
 {
-    public float MoveSpeed = 4f;
+    public float MoveSpeed = 3f;
+    public float SprintSpeed = 4.5f;
     public float RotateSpeedX = 3f;
     public float RotateSpeedY = 3f;
     public float VerticalAngleLimit = 70f;
-
     public float InteractDistanceLimit = 3f;
+    public KeyCode SprintKey = KeyCode.LeftShift;
 
     private RemovableObject grabbingObject = null;
     private CharacterController controller;
@@ -24,9 +25,15 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        var x = Input.GetAxis("Horizontal") * MoveSpeed * transform.right;
-        var z = Input.GetAxis("Vertical") * MoveSpeed * transform.forward;
-        controller.SimpleMove(x + z);
+        var x = Input.GetAxis("Horizontal") * transform.right;
+        var z = Input.GetAxis("Vertical") * transform.forward;
+        var sprint = Input.GetKey(SprintKey);
+        var move = (x + z) * (sprint ? SprintSpeed : MoveSpeed);
+        controller.SimpleMove(move);
+        if (sprint)
+        {
+            print("Player is sprinting!");
+        }
 
         var mx = Input.GetAxis("Mouse X");
         transform.Rotate(mx * RotateSpeedX * Vector3.up, Space.World);
@@ -84,5 +91,15 @@ public class Character : MonoBehaviour
             grabbingObject.Drop();
             grabbingObject = null;
         }
+
+        // Adjust player's FOV, but may conflict with "CameraZoom"
+        // if (Input.GetKeyDown(SprintKey))
+        // {
+        //     playerCam.fieldOfView *= 1.2f;
+        // }
+        // else if (Input.GetKeyUp(SprintKey))
+        // {
+        //     playerCam.fieldOfView /= 1.2f;
+        // }
     }
 }

@@ -41,6 +41,11 @@ public class RemovableObject : MonoBehaviour
                 parent.position,
                 Time.deltaTime * 10
             );
+            transform.rotation = Quaternion.Lerp(
+                transform.rotation,
+                parent.parent.rotation,
+                Time.deltaTime * 10
+            );
             rigidbody.velocity = Vector3.zero;
         }
     }
