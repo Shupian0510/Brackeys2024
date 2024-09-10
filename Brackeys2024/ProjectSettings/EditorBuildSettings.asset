@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Leafking/Scenes/House.unity
+    path: Assets/Scenes/House.unity
     guid: e72bf4a51acafb943b6b0bf394e6271b
   - enabled: 1
     path: Assets/Ghomist/Character.unity
