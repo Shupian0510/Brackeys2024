@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     public float RotateSpeedY = 3f;
     public float VerticalAngleLimit = 60f;
 
+
     public float InteractDistanceLimit = 3f;
 
     private CharacterController controller;
