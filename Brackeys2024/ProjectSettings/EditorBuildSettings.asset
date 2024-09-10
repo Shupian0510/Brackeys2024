@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Leafking/Scenes/House.unity
+    guid: e72bf4a51acafb943b6b0bf394e6271b
+  - enabled: 1
+    path: Assets/Ghomist/Character.unity
+    guid: 2976ca6cae89b4876ba3d32c74a3df5b
   m_configObjects: {}
