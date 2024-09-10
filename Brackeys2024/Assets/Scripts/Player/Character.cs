@@ -8,11 +8,11 @@ public class Character : MonoBehaviour
     public float MoveSpeed = 4f;
     public float RotateSpeedX = 3f;
     public float RotateSpeedY = 3f;
-    public float VerticalAngleLimit = 60f;
-
+    public float VerticalAngleLimit = 70f;
 
     public float InteractDistanceLimit = 3f;
 
+    private RemovableObject grabbingObject = null;
     private CharacterController controller;
     private Camera playerCam;
 
@@ -45,21 +45,44 @@ public class Character : MonoBehaviour
         );
 
         var ray = new Ray(camTrans.position, camTrans.forward);
-        if (
-            Physics.Raycast(ray, out var hitInfo, InteractDistanceLimit)
-            && hitInfo.transform.TryGetComponent<EventObject>(out var e)
-            && e.IsEventOn
-        )
+        if (Physics.Raycast(ray, out var hitInfo, InteractDistanceLimit))
         {
-            InteractionText.Instance.Show = true;
-            if (Input.GetMouseButtonDown(0))
+            if (hitInfo.transform.TryGetComponent<EventObject>(out var e) && e.IsEventOn)
             {
-                e.SetEventOff();
+                InteractionText.Instance.Show = true;
+                InteractionText.Instance.Text = "Stop It !";
+                if (Input.GetMouseButtonDown(0))
+                {
+                    e.SetEventOff();
+                }
+            }
+            else if (
+                grabbingObject == null
+                && hitInfo.transform.TryGetComponent<RemovableObject>(out var o)
+            )
+            {
+                InteractionText.Instance.Show = true;
+                InteractionText.Instance.Text = "Grab";
+                if (Input.GetMouseButton(0))
+                {
+                    grabbingObject = o;
+                    grabbingObject.SetGrab(transform.GetChild(0).GetChild(0));
+                }
+            }
+            else
+            {
+                InteractionText.Instance.Show = false;
             }
         }
         else
         {
             InteractionText.Instance.Show = false;
+        }
+
+        if (grabbingObject != null && Input.GetKey(KeyCode.Q))
+        {
+            grabbingObject.Drop();
+            grabbingObject = null;
         }
     }
 }
