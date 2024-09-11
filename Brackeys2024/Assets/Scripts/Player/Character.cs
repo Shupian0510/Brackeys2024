@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 public class Character : MonoBehaviour
@@ -13,6 +14,9 @@ public class Character : MonoBehaviour
         Sprint
     }
 
+    public static event UnityAction<Character, Transform> OnPlayerInteract;
+    public static event UnityAction<Character, Transform> OnPlayerLookingAt;
+
     public float MoveSpeed = 3f;
     public float SprintSpeed = 4.5f;
     public float RotateSpeedX = 3f;
@@ -22,8 +26,8 @@ public class Character : MonoBehaviour
     public KeyCode SprintKey = KeyCode.LeftShift;
 
     public MoveStateEnum MoveState { get; private set; } = MoveStateEnum.Idle;
+    public RemovableObject GrabbingObject { get; set; }
 
-    private RemovableObject grabbingObject = null;
     private CharacterController controller;
     private Transform playerCam;
 
@@ -73,7 +77,7 @@ public class Character : MonoBehaviour
             0
         );
 
-        //TODO: Handle camera FOV (dynamic FOV on sprinting)
+        //TODO: Dynamic camera FOV (on sprinting)
     }
 
     private void HandleInteract()
@@ -81,68 +85,35 @@ public class Character : MonoBehaviour
         var ray = new Ray(playerCam.position, playerCam.forward);
         if (Physics.Raycast(ray, out var hitInfo, InteractDistanceLimit))
         {
-            if (hitInfo.transform.TryGetComponent<EventObject>(out var e) && e.IsEventOn)
+            // Invoke 'look at' event
+            OnPlayerLookingAt?.Invoke(this, hitInfo.transform);
+
+            // Invoke 'interact' event
+            if (Input.GetMouseButtonDown(0))
             {
-                InteractionText.Instance.Show = true;
-                InteractionText.Instance.Text = "Stop It !";
-                if (Input.GetMouseButtonDown(0))
-                {
-                    e.SetEventOff();
-                }
+                OnPlayerInteract?.Invoke(this, hitInfo.transform);
             }
-            else if (
-                grabbingObject == null
-                && hitInfo.transform.TryGetComponent<RemovableObject>(out var o)
+
+            // Update interaction text (of UI)
+            if (
+                InteractionText.Instance != null
+                && hitInfo.transform.TryGetComponent<IInteractive>(out var component)
             )
             {
                 InteractionText.Instance.Show = true;
-                InteractionText.Instance.Text = "Grab";
-                if (Input.GetMouseButton(0))
-                {
-                    grabbingObject = o;
-                    grabbingObject.SetGrab(transform.GetChild(0).GetChild(0));
-                }
+                InteractionText.Instance.Text = component.GetInteractText();
             }
             else
             {
                 InteractionText.Instance.Show = false;
             }
         }
-        else
+
+        // Handle dropping item
+        if (GrabbingObject != null && Input.GetKey(KeyCode.Q))
         {
-            InteractionText.Instance.Show = false;
+            GrabbingObject.Drop();
+            GrabbingObject = null;
         }
-
-        // Handle Replacing Obj to Origion Place Once Triggerd
-        if (Physics.Raycast(ray, out var hitInfo1, InteractDistanceLimit)) {
-            if (grabbingObject != null && hitInfo1.transform.TryGetComponent<OrigionTag>(out var repobj))
-            {
-                InteractionText.Instance.Show = true;
-                InteractionText.Instance.Text = "Replace E";
-                if (Input.GetKey(KeyCode.E))
-                {
-                    //e.SetEventOff();
-                    grabbingObject.Drop();
-                    grabbingObject.transform.position = hitInfo1.transform.position;
-                    grabbingObject.transform.rotation = hitInfo1.transform.rotation;
-                    grabbingObject.GetComponent<Rigidbody>().isKinematic = true;
-                    //grabbingObject.TryGetComponent<EventObject>(out var e);
-                    //e.SetEventOff();
-                    grabbingObject = null;
-                    
-                }
-            }
-        }
-            
-
-        // Handle grabbing
-        if (grabbingObject != null && Input.GetKey(KeyCode.Q))
-        {
-            grabbingObject.Drop();
-            grabbingObject = null;
-        }
-
-        // Handle Replace
-
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EventObject : MonoBehaviour
+public class EventObject : MonoBehaviour, IInteractive
 {
     public event UnityAction OnEventHappening;
     public event UnityAction OnHandleEvent;
@@ -11,7 +11,7 @@ public class EventObject : MonoBehaviour
     private bool eventOn = false;
     public bool IsEventOn => eventOn;
 
-    private void Start() => EventManager.Instance.RegisterEventObject(this);
+    protected void RegisterEventObject() => EventManager.Instance.RegisterEventObject(this);
 
     public void SetEventOn()
     {
@@ -24,4 +24,6 @@ public class EventObject : MonoBehaviour
         eventOn = false;
         OnHandleEvent?.Invoke();
     }
+
+    public string GetInteractText() => IsEventOn ? "Stop It!" : "";
 }
