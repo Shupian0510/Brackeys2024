@@ -113,11 +113,36 @@ public class Character : MonoBehaviour
             InteractionText.Instance.Show = false;
         }
 
+        // Handle Replacing Obj to Origion Place Once Triggerd
+        if (Physics.Raycast(ray, out var hitInfo1, InteractDistanceLimit)) {
+            if (grabbingObject != null && hitInfo1.transform.TryGetComponent<OrigionTag>(out var repobj))
+            {
+                InteractionText.Instance.Show = true;
+                InteractionText.Instance.Text = "Replace E";
+                if (Input.GetKey(KeyCode.E))
+                {
+                    //e.SetEventOff();
+                    grabbingObject.Drop();
+                    grabbingObject.transform.position = hitInfo1.transform.position;
+                    grabbingObject.transform.rotation = hitInfo1.transform.rotation;
+                    grabbingObject.GetComponent<Rigidbody>().isKinematic = true;
+                    //grabbingObject.TryGetComponent<EventObject>(out var e);
+                    //e.SetEventOff();
+                    grabbingObject = null;
+                    
+                }
+            }
+        }
+            
+
         // Handle grabbing
         if (grabbingObject != null && Input.GetKey(KeyCode.Q))
         {
             grabbingObject.Drop();
             grabbingObject = null;
         }
+
+        // Handle Replace
+
     }
 }
