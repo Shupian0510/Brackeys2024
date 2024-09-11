@@ -38,8 +38,8 @@ def compress_and_resize_pngs_in_directory(directory, output_directory, scale_fac
                     print(f"Resized and compressed {file_path} and saved to {output_file}")
 
 # 设置输入目录和输出目录
-input_directory = r'e:\BrackeysGameJam\Brackeys2024\Brackeys2024\Assets\HouseAssets\Textures\Worn'  # 替换为你的实际目录
-output_directory = r'e:\BrackeysGameJam\Brackeys2024\Brackeys2024\Assets\HouseAssets\Textures\Worn\Compressed'  # 替换为保存压缩后的文件的目录
+input_directory = r'E:\BrackeysGameJam\demo\Assets\AtmosphericHouse\Textures\Worn'  # 替换为你的实际目录
+output_directory = r'E:\BrackeysGameJam\demo\Assets\AtmosphericHouse\Textures\Compressed'  # 替换为保存压缩后的文件的目录
 
 # 压缩 PNG 文件并减少分辨率，scale_factor 代表缩小比例
 compress_and_resize_pngs_in_directory(input_directory, output_directory, scale_factor=0.5, quality=85)
