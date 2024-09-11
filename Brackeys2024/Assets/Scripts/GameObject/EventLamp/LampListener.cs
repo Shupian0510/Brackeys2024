@@ -13,6 +13,7 @@ public class LampListener : MonoBehaviour
     public float randomInterval;
     private float timer = 0;
     private AudioSource audioSource;
+    private bool isPlaying = false;
 
 
 
@@ -35,6 +36,10 @@ public class LampListener : MonoBehaviour
     private void RandomBlink() {
         if (@event.IsEventOn)
         {
+            if (isPlaying) { 
+                audioSource.Play();
+                isPlaying = false;
+            }   
             bool vis = Random.Range(0, 2) == 0;
             if (vis)
             {
@@ -50,6 +55,10 @@ public class LampListener : MonoBehaviour
         }
         else
         {
+            if (!isPlaying) { 
+                audioSource.Stop();
+                isPlaying = true;
+            }
             Spotlight.SetActive(true);
             objectRenderer.material.EnableKeyword("_EMISSION");
             
