@@ -12,6 +12,8 @@ public class StressText : MonoBehaviour
 
     void Update()
     {
+        if (StressManager.Instance == null)
+            return;
         var stress = StressManager.Instance.Stress;
         text.text = $"Stress: {stress}";
     }
