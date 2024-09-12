@@ -92,6 +92,11 @@ public class StorySystem : MonoBehaviour
         StoryAudio audio = audioDict[storyFile];
         return audio.timesPlayed;
     }
+
+    public void NotReplayable(string storyFile) {
+        StoryAudio audio = audioDict[storyFile];
+        audio.isReplayable = false;
+    }
 }
 
 // StoryAudio 
