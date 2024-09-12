@@ -14,6 +14,8 @@ public class Character : MonoBehaviour
         Sprint
     }
 
+    public static Character Instance;
+
     public static event UnityAction<Character, Transform> OnPlayerInteract;
     public static event UnityAction<Character, Transform> OnPlayerLookingAt;
 
@@ -30,6 +32,8 @@ public class Character : MonoBehaviour
 
     private CharacterController controller;
     private Transform playerCam;
+
+    private void Awake() => Instance = this;
 
     private void Start()
     {

@@ -44,12 +44,8 @@ public class EventManager : MonoBehaviour
             if (CanHappened)
             {
                 eventObjects[Random.Range(0, eventObjects.Count)].SetEventOn();
-                print("Happened");
             }
-            else
-            {
-                print("Not happened");
-            }
+            else { }
         }
     }
 

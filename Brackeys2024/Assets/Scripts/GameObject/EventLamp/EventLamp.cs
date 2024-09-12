@@ -22,7 +22,7 @@ public class EventLamp : EventObject
         // 监听角色事件：当玩家与 this 互动时（鼠标左键点击），取消事件
         Character.OnPlayerInteract += (_, trans) =>
         {
-            if (trans == transform)
+            if (IsEventOn && trans == transform)
             {
                 // 这里相当于是让「事件取消的时机」由「事件物体本身」进行控制
                 // 也可以不监听此事件，在 Update 中合适的时机进行取消

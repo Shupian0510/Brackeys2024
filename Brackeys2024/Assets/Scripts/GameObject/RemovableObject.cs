@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class RemovableObject : MonoBehaviour, IInteractive
 {
+    public event UnityAction OnRestored;
+
     public RemovableObjectEnum ToolType = RemovableObjectEnum.None;
 
     private bool restoring = false;
@@ -16,7 +19,9 @@ public class RemovableObject : MonoBehaviour, IInteractive
     private (Vector3 pos, Quaternion quat) transformOriginStatus;
     private (bool, bool, bool) rigidbodyOriginalStatus;
 
-    public string GetInteractText() => "Grab";
+    public bool HideInteractText { get; set; } = false;
+
+    public string GetInteractText() => HideInteractText ? "" : "Grab";
 
     private void Start()
     {
@@ -31,14 +36,11 @@ public class RemovableObject : MonoBehaviour, IInteractive
         Character.OnPlayerInteract += (player, trans) =>
         {
             // When player interact with 'this' removable
-            if (trans == transform)
+            if (trans == transform && player.GrabbingObject == null && !grabbing && !restoring)
             {
                 player.GrabbingObject = this;
-                if (InteractionText.Instance != null)
-                {
-                    InteractionText.Instance.Show = true;
-                    InteractionText.Instance.Text = "[Click] Grab";
-                }
+                // TODO: Hard coded 'Grab Root'
+                SetGrab(player.transform.GetChild(0).GetChild(0));
             }
         };
     }
@@ -48,9 +50,6 @@ public class RemovableObject : MonoBehaviour, IInteractive
         restoring = true;
         grabbing = false;
         collider.enabled = true;
-        (rigidbody.useGravity, rigidbody.isKinematic, rigidbody.freezeRotation) =
-            rigidbodyOriginalStatus;
-        (transform.position, transform.rotation) = transformOriginStatus;
     }
 
     public void SetGrab(Transform parent)
@@ -58,7 +57,7 @@ public class RemovableObject : MonoBehaviour, IInteractive
         grabbing = true;
         collider.enabled = false;
         rigidbody.useGravity = false;
-        rigidbody.isKinematic = true;
+        rigidbody.isKinematic = false;
         rigidbody.freezeRotation = true;
         grabRoot = parent;
     }
@@ -95,6 +94,10 @@ public class RemovableObject : MonoBehaviour, IInteractive
             )
             {
                 restoring = false;
+                (transform.position, transform.rotation) = transformOriginStatus;
+                (rigidbody.useGravity, rigidbody.isKinematic, rigidbody.freezeRotation) =
+                    rigidbodyOriginalStatus;
+                OnRestored?.Invoke();
             }
         }
     }

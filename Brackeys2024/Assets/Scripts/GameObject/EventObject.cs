@@ -15,15 +15,21 @@ public class EventObject : MonoBehaviour, IInteractive
 
     public void SetEventOn()
     {
-        eventOn = true;
-        OnEventHappening?.Invoke();
+        if (!eventOn)
+        {
+            eventOn = true;
+            OnEventHappening?.Invoke();
+        }
     }
 
     public void SetEventOff()
     {
-        eventOn = false;
-        OnHandleEvent?.Invoke();
+        if (eventOn)
+        {
+            eventOn = false;
+            OnHandleEvent?.Invoke();
+        }
     }
 
-    public string GetInteractText() => IsEventOn ? "Stop It!" : "";
+    public virtual string GetInteractText() => IsEventOn ? "Stop It!" : "";
 }
