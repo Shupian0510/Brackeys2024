@@ -6,6 +6,7 @@ public class EventPainting : EventObject
 {
     [Tooltip("Must have component: 'RemovableObject'")]
     public GameObject PaintingObject;
+    public DialogueSpeaker dialogueSpeaker;
 
     public string AudioPaintingFall = "int_paintingfall";
     public string AudioPaintingPick = "int_paintingpick";
@@ -24,6 +25,7 @@ public class EventPainting : EventObject
             painting.Drop();
             StorySystem.NotReplayable(AudioPaintingFall);
             StorySystem.PlayStoryAudio(AudioPaintingFall);
+            dialogueSpeaker.playDialogue();
         };
         // 玩家手持画并且点击触发框时，把画挂回去
         Character.OnPlayerInteract += (player, trans) =>
