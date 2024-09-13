@@ -32,6 +32,11 @@ public class Character : MonoBehaviour
 
     private CharacterController controller;
     private Transform playerCam;
+    private bool lockCamera = false;
+    private bool restoringCamera = false;
+    private Vector3 cameraOriginPosition;
+    private Quaternion cameraOriginRotation;
+    private Transform cameraTarget;
 
     private void Awake() => Instance = this;
 
@@ -39,10 +44,39 @@ public class Character : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         playerCam = GetComponentInChildren<Camera>().transform;
+        cameraOriginPosition = playerCam.position;
+        cameraOriginRotation = playerCam.rotation;
     }
 
     private void Update()
     {
+        if (lockCamera)
+        {
+            if (restoringCamera)
+            {
+                if (
+                    Vector3.Distance(playerCam.position, cameraOriginPosition) < 0.01
+                    || Quaternion.Angle(playerCam.rotation, cameraOriginRotation) < 0.5f
+                )
+                {
+                    playerCam.SetPositionAndRotation(cameraOriginPosition, cameraOriginRotation);
+                    lockCamera = false;
+                    restoringCamera = false;
+                }
+                playerCam.SetPositionAndRotation(
+                    Vector3.Lerp(playerCam.position, cameraOriginPosition, Time.deltaTime * 5),
+                    Quaternion.Lerp(playerCam.rotation, cameraOriginRotation, Time.deltaTime * 5)
+                );
+            }
+            else
+            {
+                playerCam.SetPositionAndRotation(
+                    Vector3.Lerp(playerCam.position, cameraTarget.position, Time.deltaTime * 5),
+                    Quaternion.Lerp(playerCam.rotation, cameraTarget.rotation, Time.deltaTime * 5)
+                );
+            }
+            return;
+        }
         HandleMove();
         HandleCamera();
         HandleInteract();
@@ -119,5 +153,18 @@ public class Character : MonoBehaviour
             GrabbingObject.Drop();
             GrabbingObject = null;
         }
+    }
+
+    public void LockCamera(Transform target)
+    {
+        lockCamera = true;
+        cameraTarget = target;
+        cameraOriginPosition = playerCam.position;
+        cameraOriginRotation = playerCam.rotation;
+    }
+
+    public void RestoreCamera()
+    {
+        restoringCamera = true;
     }
 }
