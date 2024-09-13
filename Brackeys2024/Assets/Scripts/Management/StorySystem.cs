@@ -37,7 +37,7 @@ public class StorySystem : MonoBehaviour
         }
     }
 
-    public static void AddStoryAudio(string storyFile, bool isReplayable = true)
+    public static void AddStoryAudio(string storyFile, bool isReplayable = false)
     {
         // 检查是否已经存在该 StoryAudio
         if (audioDict.ContainsKey(storyFile))
@@ -116,7 +116,7 @@ public class StorySystem : MonoBehaviour
 /// <summary>
 /// StoryAudio
 /// </summary>
-public struct StoryAudio
+public class StoryAudio
 {
     public AudioClip clip;
     public int timesPlayed; // 播放次数
@@ -129,3 +129,4 @@ public struct StoryAudio
         timesPlayed = 0;
     }
 }
+
