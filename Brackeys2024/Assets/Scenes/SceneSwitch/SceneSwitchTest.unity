@@ -666,13 +666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 9188018873368490645, guid: 4fb7064f62452ae498c0b45845b9af48, type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 1166955688}
-    - targetCorrespondingSourceObject: {fileID: 9188018873368490645, guid: 4fb7064f62452ae498c0b45845b9af48, type: 3}
-      insertIndex: 18
-      addedObject: {fileID: 1761802138}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fb7064f62452ae498c0b45845b9af48, type: 3}
 --- !u!1 &645172169
@@ -1503,7 +1497,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1183504678}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4080226720725005011, guid: 6855bc35b9a7a4940a21d8e66dd2da41, type: 3}
       propertyPath: placed
@@ -1573,11 +1567,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6133034673310137019, guid: 6855bc35b9a7a4940a21d8e66dd2da41, type: 3}
   m_PrefabInstance: {fileID: 1166955687}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1183504678 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9188018873368490645, guid: 4fb7064f62452ae498c0b45845b9af48, type: 3}
-  m_PrefabInstance: {fileID: 567359517}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1284811444
 PrefabInstance:
@@ -2131,7 +2120,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1183504678}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 824317786525961434, guid: c4f387a03b7ef364ea860c8c59491b48, type: 3}
       propertyPath: m_Name
@@ -2531,7 +2520,9 @@ SceneRoots:
   - {fileID: 1083002103}
   - {fileID: 1720652697}
   - {fileID: 126291318}
+  - {fileID: 1166955687}
   - {fileID: 1398759996}
+  - {fileID: 1761802137}
   - {fileID: 1284811444}
   - {fileID: 983680537}
   - {fileID: 567359517}
