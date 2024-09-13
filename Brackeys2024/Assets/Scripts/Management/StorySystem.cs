@@ -103,6 +103,11 @@ public class StorySystem : MonoBehaviour
 
     public static void NotReplayable(string storyFile)
     {
+        if (!audioDict.ContainsKey(storyFile))
+        {
+            Debug.LogWarning($"Audio {storyFile} not found in the dictionary.");
+            return;
+        }
         StoryAudio audio = audioDict[storyFile];
         audio.isReplayable = false;
     }
