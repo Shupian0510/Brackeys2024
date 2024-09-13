@@ -4,28 +4,31 @@ using UnityEngine;
 
 public class StorySystem : MonoBehaviour
 {
-    public AudioSource audioSource;
-    private Dictionary<string, StoryAudio> audioDict = new Dictionary<string, StoryAudio>();
+    private static StorySystem Instance;
 
-    void Start()
-    {
-        LoadAllStoryAudios();  // ÔÚÓÎÏ·¿ªÊ¼Ê±¼ÓÔØËùÓĞÒôÆµ
-    }
+    public AudioSource AudioSource;
 
+    private static readonly Dictionary<string, StoryAudio> audioDict = new();
+
+    private void Awake() => Instance = this;
+
+    private void Start() => LoadAllStoryAudios();
+
+    // åœ¨æ¸¸æˆå¼€å§‹æ—¶åŠ è½½æ‰€æœ‰éŸ³é¢‘
     private void LoadAllStoryAudios()
     {
-        // ¼ÓÔØ Resources ÎÄ¼ş¼ĞÖĞµÄËùÓĞ AudioClip
-        AudioClip[] audioClips = Resources.LoadAll<AudioClip>("");
+        // åŠ è½½ Resources æ–‡ä»¶å¤¹ä¸­çš„æ‰€æœ‰ AudioClip
+        var audioClips = Resources.LoadAll<AudioClip>("");
 
         foreach (AudioClip clip in audioClips)
         {
-            // ÒÔÒôÆµÎÄ¼şÃûÎª key£¬Ìí¼Óµ½×ÖµäÖĞ
-            string storyFile = clip.name;
+            // ä»¥éŸ³é¢‘æ–‡ä»¶åä¸º keyï¼Œæ·»åŠ åˆ°å­—å…¸ä¸­
+            var storyFile = clip.name;
 
-            // ´´½¨²¢³õÊ¼»¯Ò»¸öĞÂµÄ StoryAudio ¶ÔÏó£¬Ä¬ÈÏÉèÖÃÎª¿ÉÖØ¸´²¥·Å
-            StoryAudio audio = new StoryAudio(clip, true);
+            // åˆ›å»ºå¹¶åˆå§‹åŒ–ä¸€ä¸ªæ–°çš„ StoryAudio å¯¹è±¡ï¼Œé»˜è®¤è®¾ç½®ä¸ºå¯é‡å¤æ’­æ”¾
+            var audio = new StoryAudio(clip, true);
 
-            // ½« StoryAudio Ìí¼Óµ½×ÖµäÖĞ
+            // å°† StoryAudio æ·»åŠ åˆ°å­—å…¸ä¸­
             if (!audioDict.ContainsKey(storyFile))
             {
                 audioDict.Add(storyFile, audio);
@@ -34,27 +37,32 @@ public class StorySystem : MonoBehaviour
         }
     }
 
-    public void AddStoryAudio(string storyFile, bool isReplayable = true)
+    public static void AddStoryAudio(string storyFile, bool isReplayable = true)
     {
-        // ¼ì²éÊÇ·ñÒÑ¾­´æÔÚ¸Ã StoryAudio
+        // æ£€æŸ¥æ˜¯å¦å·²ç»å­˜åœ¨è¯¥ StoryAudio
         if (audioDict.ContainsKey(storyFile))
         {
-            Debug.Log($"Audio {storyFile} already exists in the dictionary.");
+            Debug.LogWarning($"Audio {storyFile} already exists in the dictionary.");
             return;
         }
 
-        // ¼ÓÔØÒôÆµÎÄ¼ş
-        AudioClip clip = Resources.Load<AudioClip>(storyFile);
+        // åŠ è½½éŸ³é¢‘æ–‡ä»¶
+        var clip = Resources.Load<AudioClip>(storyFile);
 
-        // ´´½¨²¢³õÊ¼»¯Ò»¸öĞÂµÄ StoryAudio ¶ÔÏó
-        StoryAudio audio = new StoryAudio(clip, isReplayable);
+        // åˆ›å»ºå¹¶åˆå§‹åŒ–ä¸€ä¸ªæ–°çš„ StoryAudio å¯¹è±¡
+        var audio = new StoryAudio(clip, isReplayable);
 
-        // ½« StoryAudio Ìí¼Óµ½×ÖµäÖĞ
+        // å°† StoryAudio æ·»åŠ åˆ°å­—å…¸ä¸­
         audioDict[storyFile] = audio;
     }
 
-    public void PlayStoryAudio(string storyFile)
+    public static void PlayStoryAudio(string storyFile)
     {
+        if (Instance == null)
+        {
+            Debug.LogWarning("No story system component found. No audio will be played.");
+            return;
+        }
         if (!audioDict.ContainsKey(storyFile))
         {
             Debug.LogWarning($"Audio {storyFile} not found in the dictionary.");
@@ -64,23 +72,23 @@ public class StorySystem : MonoBehaviour
         StoryAudio audio = audioDict[storyFile];
         if (!audio.isReplayable && audio.timesPlayed > 0)
         {
-            Debug.Log($"Audio {storyFile} is not replayable.");
+            Debug.LogWarning($"Audio {storyFile} is not replayable.");
             return;
         }
-        if (audioSource.isPlaying && audioSource.clip == audio.clip)
+        if (Instance.AudioSource.isPlaying && Instance.AudioSource.clip == audio.clip)
         {
-            Debug.Log($"Audio {storyFile} is already playing.");
+            Debug.LogWarning($"Audio {storyFile} is already playing.");
             return;
         }
 
-        audioSource.clip = audio.clip;
-        audioSource.Play();
+        Instance.AudioSource.clip = audio.clip;
+        Instance.AudioSource.Play();
         Debug.Log($"Playing audio {storyFile}.");
 
         audio.timesPlayed++;
     }
 
-    public int GetTimesPlayed(string storyFile)
+    public static int GetTimesPlayed(string storyFile)
     {
         //  StoryAudio
         if (!audioDict.ContainsKey(storyFile))
@@ -93,22 +101,26 @@ public class StorySystem : MonoBehaviour
         return audio.timesPlayed;
     }
 
-    public void NotReplayable(string storyFile) {
+    public static void NotReplayable(string storyFile)
+    {
         StoryAudio audio = audioDict[storyFile];
         audio.isReplayable = false;
     }
 }
 
-// StoryAudio 
-public class StoryAudio
+/// <summary>
+/// StoryAudio
+/// </summary>
+public struct StoryAudio
 {
     public AudioClip clip;
-    public int timesPlayed; // ²¥·Å´ÎÊı
-    public bool isReplayable; // ¿É·ñÖØ¸´²¥·Å
+    public int timesPlayed; // æ’­æ”¾æ¬¡æ•°
+    public bool isReplayable; // å¯å¦é‡å¤æ’­æ”¾
+
     public StoryAudio(AudioClip clip, bool isReplayable)
     {
         this.clip = clip;
-        this.timesPlayed = 0;
         this.isReplayable = isReplayable;
+        timesPlayed = 0;
     }
 }

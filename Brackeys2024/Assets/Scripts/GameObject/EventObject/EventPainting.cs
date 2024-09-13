@@ -6,7 +6,10 @@ public class EventPainting : EventObject
 {
     [Tooltip("Must have component: 'RemovableObject'")]
     public GameObject PaintingObject;
-    public StorySystem StorySystem; //故事语音系统
+
+    public string AudioPaintingFall = "int_paintingfall";
+    public string AudioPaintingPick = "int_paintingpick";
+
     private RemovableObject painting;
 
     private void Start()
@@ -19,8 +22,8 @@ public class EventPainting : EventObject
         {
             painting.HideInteractText = false;
             painting.Drop();
-            StorySystem.NotReplayable("int_paintingfall");
-            StorySystem.PlayStoryAudio("int_paintingfall");
+            StorySystem.NotReplayable(AudioPaintingFall);
+            StorySystem.PlayStoryAudio(AudioPaintingFall);
         };
         // 玩家手持画并且点击触发框时，把画挂回去
         Character.OnPlayerInteract += (player, trans) =>
@@ -30,8 +33,8 @@ public class EventPainting : EventObject
                 player.GrabbingObject = null;
                 painting.HideInteractText = true;
                 painting.Restore();
-                StorySystem.NotReplayable("int_paintingpick");
-                StorySystem.PlayStoryAudio("int_paintingpick");
+                StorySystem.NotReplayable(AudioPaintingPick);
+                StorySystem.PlayStoryAudio(AudioPaintingPick);
             }
         };
         // 每次画被重置（被挂回去）时取消事件
