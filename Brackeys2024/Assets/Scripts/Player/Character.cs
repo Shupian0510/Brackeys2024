@@ -26,6 +26,7 @@ public class Character : MonoBehaviour
     public float VerticalAngleLimit = 70f;
     public float InteractDistanceLimit = 3f;
     public KeyCode SprintKey = KeyCode.LeftShift;
+    public KeyCode BreathKey = KeyCode.F;
 
     public MoveStateEnum MoveState { get; private set; } = MoveStateEnum.Idle;
     public RemovableObject GrabbingObject { get; set; }
@@ -50,6 +51,8 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
+        var breathing = Input.GetKey(BreathKey);
+
         if (lockCamera)
         {
             if (restoringCamera)
@@ -76,11 +79,13 @@ public class Character : MonoBehaviour
                 );
             }
         }
-        else
+        else if (!breathing)
         {
             HandleMove();
             HandleCamera();
         }
+        if (StressManager.Instance != null)
+            StressManager.Instance.Breathing = breathing;
         HandleInteract();
     }
 

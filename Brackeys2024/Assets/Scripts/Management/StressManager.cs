@@ -12,6 +12,7 @@ public class StressManager : MonoBehaviour
     public float StressLimit = 1;
 
     public bool Pause = false;
+    public bool Breathing = false;
 
     private string stress25 = "stress25";
     private string stress50 = "stress50";
@@ -24,7 +25,7 @@ public class StressManager : MonoBehaviour
     /// Increasing stress per second
     /// </summary>
     public float IncreasingRate = 0.01f;
-    public float DecreasingRate = 0.01f;
+    public float DecreasingRate = 0.02f;
     public float IncreasePow = 1.5f;
 
     private void Awake() => Instance = this;
@@ -39,6 +40,8 @@ public class StressManager : MonoBehaviour
         if (eventCount > 0)
             Stress += Time.deltaTime * IncreasingRate * Mathf.Pow(eventCount, IncreasePow);
         else if (Stress > 0)
+            Stress -= Time.deltaTime * DecreasingRate;
+        if (Breathing && Stress > 0)
             Stress -= Time.deltaTime * DecreasingRate;
 
         if (Stress > 0.25 && Stress < 0.5)
