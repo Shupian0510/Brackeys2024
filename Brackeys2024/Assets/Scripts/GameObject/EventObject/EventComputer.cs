@@ -6,19 +6,23 @@ using UnityEngine;
 public class EventComputer : EventObject
 {
     private new MeshRenderer renderer;
+    private new AudioSource audio;
 
     private void Start()
     {
         renderer = GetComponent<MeshRenderer>();
+        audio = GetComponent<AudioSource>();
 
         OnEventHappening += () =>
         {
             renderer.material.EnableKeyword("_EMISSION");
+            audio.Play();
         };
         Character.OnPlayerInteract += (_, trans) =>
         {
             if (trans == transform)
             {
+                
                 renderer.material.DisableKeyword("_EMISSION");
                 SetEventOff();
             }

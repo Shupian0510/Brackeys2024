@@ -24,8 +24,9 @@ public class Journal : MonoBehaviour, IInteractive
     private void Oninteract()
     {
         //Journal Panel On
+        //ActiveOff();
         StorySystem.PlayStoryAudio("int_journal");
-        StoryFlowControl.state = 2;
+        if(StoryFlowControl.state == 1) StoryFlowControl.state = 2;
 
     }
 

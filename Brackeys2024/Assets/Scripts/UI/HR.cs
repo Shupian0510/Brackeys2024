@@ -6,6 +6,9 @@ public class HR : MonoBehaviour
 {
     public static HR Instance;
 
+    public GameObject audio;
+    public AudioSource audioSource;
+
     private Text text;
 
     public string Text
@@ -24,6 +27,7 @@ public class HR : MonoBehaviour
 
     private void Start()
     {
+        audioSource = audio.GetComponent<AudioSource>();
         text = GetComponent<Text>();
         text.enabled = true;
     }
@@ -33,5 +37,14 @@ public class HR : MonoBehaviour
         float Stress = StressManager.Instance.Stress;
         float HR = (int)(Stress * 80f + 60f);
         this.Text = HR.ToString();
+        audioSource.pitch = Stress + 1;
+    }
+
+    public void PlayHR() {
+        audioSource.Play();
+    }
+    public void StopHR()
+    {
+        audioSource.Stop();
     }
 }

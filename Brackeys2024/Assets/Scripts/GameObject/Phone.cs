@@ -27,7 +27,8 @@ public class Phone : MonoBehaviour, IInteractive
     private void OnPickedUp()
     {
         ActiveOff();
-        StoryFlowControl.diadoc();
+        if(StoryFlowControl.state == -1) StoryFlowControl.diadoc();
+        if (StoryFlowControl.state == 13) StoryFlowControl.diamom();
     }
 
     // TODO: 音源操作代码需完善

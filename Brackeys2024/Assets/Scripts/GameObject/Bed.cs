@@ -14,6 +14,7 @@ public class Bed : MonoBehaviour, IInteractive
 
     private void Start()
     {
+
         Character.OnPlayerInteract += (player, trans) =>
         {
             if (trans == transform && !sleeping)
@@ -22,6 +23,16 @@ public class Bed : MonoBehaviour, IInteractive
                 LockOnTemp();
                 Invoke(nameof(LockOnRoot), 1f);
                 Invoke(nameof(ToggleState), 2f);
+
+                Debug.Log("SLEEP");
+                
+                if (StoryFlowControl.state == 7) { 
+                    StoryFlowControl.state = 8;
+                }
+                if (StoryFlowControl.state == 13)
+                {
+                    StoryFlowControl.state = 14;
+                }
             }
         };
     }

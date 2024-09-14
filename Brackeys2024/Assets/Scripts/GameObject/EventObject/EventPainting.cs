@@ -7,6 +7,7 @@ public class EventPainting : EventObject
     [Tooltip("Must have component: 'RemovableObject'")]
     public GameObject PaintingObject;
     public DialogueSpeaker dialogueSpeaker;
+    private new AudioSource audio;
 
     public string AudioPaintingFall = "int_paintingfall";
     public string AudioPaintingPick = "int_paintingpick";
@@ -15,6 +16,7 @@ public class EventPainting : EventObject
 
     private void Start()
     {
+        audio = GetComponent<AudioSource>();
         painting = PaintingObject.GetComponent<RemovableObject>();
         painting.HideInteractText = true;
         painting.Locked = true;
@@ -22,6 +24,7 @@ public class EventPainting : EventObject
         // 事件发生时，将画设置为自由刚体
         OnEventHappening += () =>
         {
+            audio.Play();
             painting.HideInteractText = false;
             painting.Locked = false;
             painting.Drop();
