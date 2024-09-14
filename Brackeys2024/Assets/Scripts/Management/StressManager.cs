@@ -11,6 +11,8 @@ public class StressManager : MonoBehaviour
     public float Stress = 0;
     public float StressLimit = 1;
 
+    public bool Pause = false;
+
     private string stress25 = "stress25";
     private string stress50 = "stress50";
     private string stress75 = "stress75";
@@ -29,6 +31,9 @@ public class StressManager : MonoBehaviour
 
     private void Update()
     {
+        if (Pause)
+            return;
+
         //Play Stress related audio
         var eventCount = EventManager.Instance.EventCount;
         if (eventCount > 0)
@@ -36,18 +41,22 @@ public class StressManager : MonoBehaviour
         else if (Stress > 0)
             Stress -= Time.deltaTime * DecreasingRate;
 
-        if (Stress > 0.25 && Stress < 0.5) {
+        if (Stress > 0.25 && Stress < 0.5)
+        {
             StorySystem.NotReplayable(stress25);
             StorySystem.PlayStoryAudio(stress25);
-        }else if (Stress > 0.5 && Stress < 0.75)
+        }
+        else if (Stress > 0.5 && Stress < 0.75)
         {
             StorySystem.NotReplayable(stress50);
             StorySystem.PlayStoryAudio(stress50);
-        }else if (Stress > 0.75 && Stress < 0.9)
+        }
+        else if (Stress > 0.75 && Stress < 0.9)
         {
             StorySystem.NotReplayable(stress75);
             StorySystem.PlayStoryAudio(stress75);
-        }else if (Stress > 0.9 && Stress < 1)
+        }
+        else if (Stress > 0.9 && Stress < 1)
         {
             StorySystem.NotReplayable(stress90);
             StorySystem.PlayStoryAudio(stress90);

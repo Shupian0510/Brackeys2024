@@ -7,7 +7,17 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager Instance;
 
-    public bool Pause;
+    public bool _pause = false;
+    public bool Pause
+    {
+        get => _pause;
+        set
+        {
+            if (StressManager.Instance != null)
+                StressManager.Instance.Pause = value;
+            _pause = value;
+        }
+    }
     public float EventIntervalMin;
     public float EventIntervalMax;
     public float EventPossibility;
