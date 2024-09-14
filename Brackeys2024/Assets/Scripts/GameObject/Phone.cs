@@ -9,7 +9,7 @@ public class Phone : MonoBehaviour, IInteractive
     private bool isRinging = false;
 
     // 根据响铃状态自动变更的互动文字
-    public string GetInteractText() => isRinging ? "Pick Up" : "";
+    public string GetInteractText() => isRinging ? "call" : "";
 
     private void Start()
     {
@@ -19,7 +19,6 @@ public class Phone : MonoBehaviour, IInteractive
         {
             if (trans == transform && isRinging)
             {
-                RingingOff();
                 OnPickedUp();
             }
         };
@@ -27,19 +26,21 @@ public class Phone : MonoBehaviour, IInteractive
 
     private void OnPickedUp()
     {
-        // TODO: 玩家点击电话后的逻辑代码
+        ActiveOff();
+        StoryFlowControl.diadoc();
     }
 
     // TODO: 音源操作代码需完善
-    public void Ringing()
+    public void ActiveOn()
     {
+        Debug.Log("RINGON");
         isRinging = true;
-        // audio.Play();
+        audio.Play();
     }
 
-    public void RingingOff()
+    public void ActiveOff()
     {
         isRinging = false;
-        // audio.Stop();
+        audio.Stop();
     }
 }

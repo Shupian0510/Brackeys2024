@@ -9,6 +9,8 @@ public class StorySystem : MonoBehaviour
     public AudioSource AudioSource;
 
     private static readonly Dictionary<string, StoryAudio> audioDict = new();
+    private Queue<StoryAudio> audioQueue = new Queue<StoryAudio>(); // FIFO 队列
+    private bool isPlaying = false; // 当前是否正在播放音频
 
     private void Awake() => Instance = this;
 
@@ -34,7 +36,10 @@ public class StorySystem : MonoBehaviour
                 audioDict.Add(storyFile, audio);
                 Debug.Log($"Loaded audio: {storyFile}");
             }
+            
         }
+        //加载之后再进入
+        StoryFlowControl.startvoice();
     }
 
     public static void AddStoryAudio(string storyFile, bool isReplayable = false)
@@ -42,7 +47,7 @@ public class StorySystem : MonoBehaviour
         // 检查是否已经存在该 StoryAudio
         if (audioDict.ContainsKey(storyFile))
         {
-            Debug.LogWarning($"Audio {storyFile} already exists in the dictionary.");
+            //Debug.LogWarning($"Audio {storyFile} already exists in the dictionary.");
             return;
         }
 
@@ -75,22 +80,67 @@ public class StorySystem : MonoBehaviour
             Debug.LogWarning($"Audio {storyFile} is not replayable.");
             return;
         }
-        if (Instance.AudioSource.isPlaying && Instance.AudioSource.clip == audio.clip)
+
+        // 将音频加入队列
+        Instance.audioQueue.Enqueue(audio);
+        Debug.Log($"Audio {storyFile} added to queue.");
+
+        // 如果当前没有音频在播放，开始播放队列中的音频
+        if (!Instance.isPlaying)
         {
-            Debug.LogWarning($"Audio {storyFile} is already playing.");
-            return;
+            Instance.PlayNextInQueue();
         }
+    }
 
-        Instance.AudioSource.clip = audio.clip;
-        Instance.AudioSource.Play();
-        Debug.Log($"Playing audio {storyFile}.");
+    private void PlayNextInQueue()
+    {
+        if (audioQueue.Count > 0)
+        {
+            // 从队列中取出下一个音频进行播放
+            StoryAudio audioToPlay = audioQueue.Peek();
+            Instance.AudioSource.clip = audioToPlay.clip;
 
-        audio.timesPlayed++;
+            if (audioToPlay.isReplayable)
+            {
+                Instance.AudioSource.Play();
+            }
+            else if (!audioToPlay.isReplayable && audioToPlay.timesPlayed < 1) {
+                Instance.AudioSource.Play();
+            }
+            
+            isPlaying = true;
+
+            Debug.Log($"Playing audio {audioToPlay.clip.name}.");
+
+            // 设置协程等待音频播放完毕
+            StartCoroutine(WaitForAudioToEnd(audioToPlay));
+            
+        }
+        else
+        {
+            // 队列为空，播放结束
+            isPlaying = false;
+            Debug.Log("No more audio in the queue.");
+        }
+    }
+
+    private IEnumerator WaitForAudioToEnd(StoryAudio currentAudio)
+    {
+        // 等待音频播放结束
+        yield return new WaitWhile(() => AudioSource.isPlaying);
+
+        // 音频播放结束
+        currentAudio.timesPlayed++;
+        isPlaying = false;
+
+        audioQueue.Dequeue();
+        // 播放队列中的下一个音频
+        PlayNextInQueue();
     }
 
     public static int GetTimesPlayed(string storyFile)
     {
-        //  StoryAudio
+        // 获取 StoryAudio 的播放次数
         if (!audioDict.ContainsKey(storyFile))
         {
             Debug.LogWarning($"Audio {storyFile} not found in the dictionary.");
@@ -111,6 +161,15 @@ public class StorySystem : MonoBehaviour
         StoryAudio audio = audioDict[storyFile];
         audio.isReplayable = false;
     }
+    public static bool IsPlaying() {
+        return Instance.AudioSource.isPlaying;
+    }
+    public static bool HasAudioInQueue()
+    {
+        // 检查队列中是否还有音频
+        return Instance.audioQueue.Count > 0;
+    }
+
 }
 
 /// <summary>
@@ -129,4 +188,3 @@ public class StoryAudio
         timesPlayed = 0;
     }
 }
-
