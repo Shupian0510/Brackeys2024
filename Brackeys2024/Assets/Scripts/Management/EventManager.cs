@@ -21,8 +21,14 @@ public class EventManager : MonoBehaviour
     public float EventIntervalMin;
     public float EventIntervalMax;
     public float EventPossibility;
+    public float StressGrowingThreshold = 5f; // 不超过该时间的事件不会造成压力，超过后按时长对数增长
 
-    public int EventCount => eventObjects.Count(x => x.IsEventOn);
+    public int EventCount => eventObjects.Count(x => x.IsMakingStress);
+    public float EventHappenRate => (float)EventCount / eventObjects.Count;
+    public float StressCount =>
+        eventObjects
+            .FindAll(x => x.IsMakingStress)
+            .Sum(x => Mathf.Log(Mathf.Max(1, x.RemainingTime - StressGrowingThreshold + 1), 2f));
 
     private float eventTimer = 0;
     private readonly List<EventObject> eventObjects = new();

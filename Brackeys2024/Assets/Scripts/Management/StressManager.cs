@@ -26,7 +26,6 @@ public class StressManager : MonoBehaviour
     /// </summary>
     public float IncreasingRate = 0.01f;
     public float DecreasingRate = 0.02f;
-    public float IncreasePow = 1.5f;
 
     private void Awake() => Instance = this;
 
@@ -38,7 +37,14 @@ public class StressManager : MonoBehaviour
         //Play Stress related audio
         var eventCount = EventManager.Instance.EventCount;
         if (eventCount > 0)
-            Stress += Time.deltaTime * IncreasingRate * Mathf.Pow(eventCount, IncreasePow);
+            Stress +=
+                Time.deltaTime
+                * IncreasingRate
+                * Mathf.Pow(
+                    EventManager.Instance.StressCount,
+                    EventManager.Instance.EventHappenRate + 1
+                );
+        // Stress += Time.deltaTime * IncreasingRate * Mathf.Pow(eventCount, IncreasePow);
         else if (Stress > 0)
             Stress -= Time.deltaTime * DecreasingRate;
         if (Breathing && Stress > 0)

@@ -26,7 +26,7 @@ public class Character : MonoBehaviour
     public float VerticalAngleLimit = 70f;
     public float InteractDistanceLimit = 3f;
     public KeyCode SprintKey = KeyCode.LeftShift;
-    public KeyCode BreathKey = KeyCode.F;
+    public KeyCode BreathKey = KeyCode.R;
 
     public MoveStateEnum MoveState { get; private set; } = MoveStateEnum.Idle;
     public RemovableObject GrabbingObject { get; set; }

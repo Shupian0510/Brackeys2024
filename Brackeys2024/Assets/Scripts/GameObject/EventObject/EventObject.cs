@@ -11,6 +11,12 @@ public class EventObject : MonoBehaviour, IInteractive
     private bool eventOn = false;
     public bool IsEventOn => eventOn;
 
+    private float startTime = -1;
+    public float RemainingTime => Time.time - startTime;
+
+    public bool IsMakingStress =>
+        IsEventOn && RemainingTime > EventManager.Instance.StressGrowingThreshold;
+
     protected void RegisterEventObject() => EventManager.Instance.RegisterEventObject(this);
 
     public void SetEventOn()
@@ -18,6 +24,7 @@ public class EventObject : MonoBehaviour, IInteractive
         if (!eventOn)
         {
             eventOn = true;
+            startTime = Time.time;
             OnEventHappening?.Invoke();
         }
     }
@@ -27,6 +34,7 @@ public class EventObject : MonoBehaviour, IInteractive
         if (eventOn)
         {
             eventOn = false;
+            startTime = -1;
             OnHandleEvent?.Invoke();
         }
     }
