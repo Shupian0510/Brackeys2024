@@ -22,11 +22,10 @@ public class EventComputer : EventObject
         {
             if (trans == transform)
             {
-                
-                renderer.material.DisableKeyword("_EMISSION");
-                SetEventOff();
+                SetEventOff(2);
             }
         };
+        OnHandleEvent += () => renderer.material.DisableKeyword("_EMISSION");
 
         RegisterEventObject();
     }

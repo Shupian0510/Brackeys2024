@@ -6,6 +6,7 @@ public class EventToilet : EventObject
 {
     private new AudioSource audio;
     private bool isplaying = false;
+
     private void Start()
     {
         audio = GetComponent<AudioSource>();
@@ -13,10 +14,13 @@ public class EventToilet : EventObject
         {
             if (IsEventOn && trans == transform)
             {
-                SetEventOff();
-                audio.Stop();
-                isplaying = false;
+                SetEventOff(2);
             }
+        };
+        OnHandleEvent += () =>
+        {
+            audio.Stop();
+            isplaying = false;
         };
 
         RegisterEventObject();
@@ -24,7 +28,8 @@ public class EventToilet : EventObject
 
     private void Update()
     {
-        if (! isplaying && IsEventOn) { 
+        if (!isplaying && IsEventOn)
+        {
             audio.Play();
             isplaying = true;
         }

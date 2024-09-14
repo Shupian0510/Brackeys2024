@@ -18,6 +18,8 @@ public class Character : MonoBehaviour
 
     public static event UnityAction<Character, Transform> OnPlayerInteract;
     public static event UnityAction<Character, Transform> OnPlayerLookingAt;
+    public static event UnityAction<Character, Transform> OnPlayerHoldingOn;
+    public static event UnityAction<Character, Transform> OnPlayerReleaseOn;
 
     public float MoveSpeed = 3f;
     public float SprintSpeed = 4.5f;
@@ -131,21 +133,26 @@ public class Character : MonoBehaviour
         var ray = new Ray(playerCam.position, playerCam.forward);
         if (Physics.Raycast(ray, out var hitInfo, InteractDistanceLimit))
         {
-            if(hitInfo.collider.tag == "Interactable") {
-                NormalInteractObj newInteractable = hitInfo.collider.GetComponent<NormalInteractObj>();
+            if (hitInfo.collider.tag == "Interactable")
+            {
+                NormalInteractObj newInteractable =
+                    hitInfo.collider.GetComponent<NormalInteractObj>();
 
-                if(currentInteractable && newInteractable != currentInteractable) {
+                if (currentInteractable && newInteractable != currentInteractable)
+                {
                     currentInteractable.DisableOutline();
                 }
-                if (newInteractable.enabled) {
+                if (newInteractable.enabled)
+                {
                     SetNewCurrentInteractable(newInteractable);
                 }
-                else {
+                else
+                {
                     DisableCurrentInteractable();
                 }
-
             }
-            else {
+            else
+            {
                 DisableCurrentInteractable();
             }
             // Invoke 'look at' event
@@ -155,11 +162,20 @@ public class Character : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && currentInteractable != null)
             {
                 currentInteractable.Interact();
-                
             }
-            else if (Input.GetMouseButtonDown(0)){
+            if (Input.GetMouseButtonDown(0))
+            {
                 OnPlayerInteract?.Invoke(this, hitInfo.transform);
             }
+            else if (Input.GetMouseButton(0))
+            {
+                OnPlayerHoldingOn?.Invoke(this, hitInfo.transform);
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                OnPlayerReleaseOn?.Invoke(this, hitInfo.transform);
+            }
+
             // Update interaction text (of UI)
             if (
                 InteractionText.Instance != null
@@ -174,7 +190,8 @@ public class Character : MonoBehaviour
                 InteractionText.Instance.Show = false;
             }
         }
-        else {
+        else
+        {
             DisableCurrentInteractable();
         }
 
@@ -186,17 +203,21 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void SetNewCurrentInteractable(NormalInteractObj newInteractable) {
+    public void SetNewCurrentInteractable(NormalInteractObj newInteractable)
+    {
         currentInteractable = newInteractable;
         currentInteractable.EnableOutline();
     }
 
-    public void DisableCurrentInteractable() {
-        if(currentInteractable) {
-        currentInteractable.DisableOutline();
-        currentInteractable = null;
+    public void DisableCurrentInteractable()
+    {
+        if (currentInteractable)
+        {
+            currentInteractable.DisableOutline();
+            currentInteractable = null;
         }
     }
+
     public void LockCamera(Transform target)
     {
         if (!lockCamera)

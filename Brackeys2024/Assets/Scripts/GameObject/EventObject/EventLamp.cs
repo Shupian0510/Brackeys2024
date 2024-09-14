@@ -26,7 +26,7 @@ public class EventLamp : EventObject
             {
                 // 这里相当于是让「事件取消的时机」由「事件物体本身」进行控制
                 // 也可以不监听此事件，在 Update 中合适的时机进行取消
-                SetEventOff();
+                SetEventOff(2);
             }
         };
 
