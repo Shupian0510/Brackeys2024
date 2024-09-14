@@ -73,6 +73,7 @@ public class StressManager : MonoBehaviour
 
         if (Stress > StressLimit)
         {
+            LevelLoader.Instance.LoadPreviousLevel();
             OnStressedOut?.Invoke();
         }
     }

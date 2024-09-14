@@ -66,6 +66,7 @@ public class StoryFlowControl : MonoBehaviour
             EventManager.Instance.Pause = false;
             HR.Instance.PlayHR();
             state = 10;
+            MedManager.Instance.RespawnMedicine();
             //µÚ¶þ½×¶Î¿ªÆô
         }
         else if (state == 10)
@@ -83,7 +84,8 @@ public class StoryFlowControl : MonoBehaviour
             HR.Instance.StopHR();
             state = 12;
         }
-        else if (state == 12) {
+        else if (state == 12)
+        {
             phone.GetComponent<Phone>().ActiveOn();
             state = 13;
         }
@@ -93,19 +95,28 @@ public class StoryFlowControl : MonoBehaviour
             congra.SetActive(true);
             state = 15;
         }
+        else if (state == 15)
+        {
+            timer += Time.deltaTime;
+            if (timer > 10f)
+            {
+                timer = 0f;
+                LevelLoader.Instance.LoadPreviousLevel();
+            }
+        }
     }
 
     public static void startvoice() {
-        //StorySystem.PlayStoryAudio("beg1");
-        //StorySystem.PlayStoryAudio("beg2");
+        StorySystem.PlayStoryAudio("beg1");
+        StorySystem.PlayStoryAudio("beg2");
         state = 1;
         //test
     }
     public static void diadoc() {
-        //StorySystem.PlayStoryAudio("Docdia1_doc");
-        //StorySystem.PlayStoryAudio("Docdia2_player");
-        //StorySystem.PlayStoryAudio("Docdia3_doc");
-        //StorySystem.PlayStoryAudio("Docdia4_player");
+        StorySystem.PlayStoryAudio("Docdia1_doc");
+        StorySystem.PlayStoryAudio("Docdia2_player");
+        StorySystem.PlayStoryAudio("Docdia3_doc");
+        StorySystem.PlayStoryAudio("Docdia4_player");
         StorySystem.PlayStoryAudio("Docdia5_doc");
         state = 4;
     }

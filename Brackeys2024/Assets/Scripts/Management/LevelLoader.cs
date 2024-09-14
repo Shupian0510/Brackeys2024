@@ -9,6 +9,10 @@ public class LevelLoader : MonoBehaviour
 
     public float transitionTime = 1f;
 
+    public static LevelLoader Instance;
+
+    private void Awake() => Instance = this;
+
     /*void Update()
     {
         if(Input.GetMouseButton(0)) {
@@ -19,6 +23,14 @@ public class LevelLoader : MonoBehaviour
     public void LoadNextLevel()
     {
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+    }
+    public void LoadPreviousLevel()
+    {
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex - 1));
+    }
+    public void ReloadLevel()
+    {
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
     }
 
     IEnumerator LoadLevel(int levelIndex) {

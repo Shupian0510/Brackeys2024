@@ -20,7 +20,7 @@ public class noteUI : MonoBehaviour
 
     void Update() {
         // 检查是否按下了 ESC 键
-        if (Input.GetKeyDown(KeyCode.Escape) && isNotebookOpen) {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && isNotebookOpen) {
             // 切换笔记本 UI 的状态
             ToggleNotebook();
         }
