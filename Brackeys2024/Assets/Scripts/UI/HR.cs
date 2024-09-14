@@ -38,6 +38,7 @@ public class HR : MonoBehaviour
         float HR = (int)(Stress * 80f + 60f);
         this.Text = HR.ToString();
         audioSource.pitch = Stress + 1;
+        text.color = new Color(255*(Stress * 2f),255 * (2-2*Stress),0);
     }
 
     public void PlayHR() {

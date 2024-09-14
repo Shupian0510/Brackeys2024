@@ -276,9 +276,9 @@ MonoBehaviour:
   Stress: 0
   StressLimit: 1
   Pause: 0
+  Breathing: 0
   IncreasingRate: 0.002
   DecreasingRate: 0.01
-  IncreasePow: 1.5
 --- !u!114 &126291317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +295,7 @@ MonoBehaviour:
   EventIntervalMin: 1
   EventIntervalMax: 2
   EventPossibility: 1
+  StressGrowingThreshold: 5
 --- !u!4 &126291318
 Transform:
   m_ObjectHideFlags: 0
@@ -577,7 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.5943396, b: 0.13054147, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -620,6 +621,85 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audio: {fileID: 769623571}
   audioSource: {fileID: 0}
+--- !u!1 &233301366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 233301369}
+  - component: {fileID: 233301368}
+  - component: {fileID: 233301367}
+  m_Layer: 5
+  m_Name: cong
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &233301367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233301366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 0073ed12dd22146c6bfb87b15afbee84, type: 3}
+    m_FontSize: 54
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 54
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Alex defeated his anxiety
+--- !u!222 &233301368
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233301366}
+  m_CullTransparentMesh: 1
+--- !u!224 &233301369
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233301366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1463290291}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 968.1587, y: 339.0018}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &287050492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3501454417968633612, guid: 8326ea952f92038f68a85ac44eb96694, type: 3}
@@ -935,9 +1015,9 @@ MonoBehaviour:
   journal: {fileID: 873117016}
   phone: {fileID: 132723084}
   pill: {fileID: 837097675}
-  bedtrigger: {fileID: 0}
+  congra: {fileID: 233301366}
   timer: 0
-  stage1Time: 10
+  stage1Time: 60
   stage2Time: 10
 --- !u!114 &430346136
 MonoBehaviour:
@@ -3154,6 +3234,7 @@ RectTransform:
   - {fileID: 380950470}
   - {fileID: 181564606}
   - {fileID: 1960066530}
+  - {fileID: 233301369}
   m_Father: {fileID: 1720652697}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
