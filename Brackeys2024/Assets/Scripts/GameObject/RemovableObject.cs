@@ -20,6 +20,7 @@ public class RemovableObject : MonoBehaviour, IInteractive
     private (bool, bool, bool) rigidbodyOriginalStatus;
 
     public bool HideInteractText { get; set; } = false;
+    public bool Locked { get; set; } = false;
 
     public string GetInteractText() => HideInteractText ? "" : "Grab";
 
@@ -36,7 +37,13 @@ public class RemovableObject : MonoBehaviour, IInteractive
         Character.OnPlayerInteract += (player, trans) =>
         {
             // When player interact with 'this' removable
-            if (trans == transform && player.GrabbingObject == null && !grabbing && !restoring)
+            if (
+                trans == transform
+                && player.GrabbingObject == null
+                && !grabbing
+                && !restoring
+                && !Locked
+            )
             {
                 player.GrabbingObject = this;
                 // TODO: Hard coded 'Grab Root'
@@ -54,6 +61,8 @@ public class RemovableObject : MonoBehaviour, IInteractive
 
     public void SetGrab(Transform parent)
     {
+        if (Locked)
+            return;
         grabbing = true;
         collider.enabled = false;
         rigidbody.useGravity = false;

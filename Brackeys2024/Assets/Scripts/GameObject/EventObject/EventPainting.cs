@@ -17,11 +17,13 @@ public class EventPainting : EventObject
     {
         painting = PaintingObject.GetComponent<RemovableObject>();
         painting.HideInteractText = true;
+        painting.Locked = true;
 
         // 事件发生时，将画设置为自由刚体
         OnEventHappening += () =>
         {
             painting.HideInteractText = false;
+            painting.Locked = false;
             painting.Drop();
             StorySystem.NotReplayable(AudioPaintingFall);
             StorySystem.PlayStoryAudio(AudioPaintingFall);
@@ -34,6 +36,7 @@ public class EventPainting : EventObject
             {
                 player.GrabbingObject = null;
                 painting.HideInteractText = true;
+                painting.Locked = true;
                 painting.Restore();
                 StorySystem.NotReplayable(AudioPaintingPick);
                 StorySystem.PlayStoryAudio(AudioPaintingPick);
