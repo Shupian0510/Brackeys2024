@@ -5,8 +5,9 @@ using UnityEngine;
 public class Bed : MonoBehaviour, IInteractive
 {
     public GameObject SleepCameraRoot;
+    public GameObject SleepCameraRootTemp;
 
-    public string GetInteractText() => "Sleep";
+    public string GetInteractText() => sleeping ? "Get Up" : "Sleep";
 
     private bool sleeping = false;
     private Character player;
@@ -15,9 +16,13 @@ public class Bed : MonoBehaviour, IInteractive
     {
         Character.OnPlayerInteract += (player, trans) =>
         {
-            this.player = player;
-            player.LockCamera(SleepCameraRoot.transform);
-            Invoke(nameof(ToggleState), 2f);
+            if (trans == transform && !sleeping)
+            {
+                this.player = player;
+                LockOnTemp();
+                Invoke(nameof(LockOnRoot), 1f);
+                Invoke(nameof(ToggleState), 2f);
+            }
         };
     }
 
@@ -25,10 +30,17 @@ public class Bed : MonoBehaviour, IInteractive
     {
         if (sleeping && Input.anyKeyDown)
         {
-            player.RestoreCamera();
-            ToggleState();
+            LockOnTemp();
+            Invoke(nameof(Unlock), 1f);
+            Invoke(nameof(ToggleState), 1f);
         }
     }
+
+    private void LockOnRoot() => player.LockCamera(SleepCameraRoot.transform);
+
+    private void LockOnTemp() => player.LockCamera(SleepCameraRootTemp.transform);
+
+    private void Unlock() => player.RestoreCamera();
 
     private void ToggleState() => sleeping = !sleeping;
 }

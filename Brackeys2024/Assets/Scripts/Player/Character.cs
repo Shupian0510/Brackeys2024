@@ -75,10 +75,12 @@ public class Character : MonoBehaviour
                     Quaternion.Lerp(playerCam.rotation, cameraTarget.rotation, Time.deltaTime * 5)
                 );
             }
-            return;
         }
-        HandleMove();
-        HandleCamera();
+        else
+        {
+            HandleMove();
+            HandleCamera();
+        }
         HandleInteract();
     }
 
@@ -157,10 +159,13 @@ public class Character : MonoBehaviour
 
     public void LockCamera(Transform target)
     {
+        if (!lockCamera)
+        {
+            cameraOriginPosition = playerCam.position;
+            cameraOriginRotation = playerCam.rotation;
+        }
         lockCamera = true;
         cameraTarget = target;
-        cameraOriginPosition = playerCam.position;
-        cameraOriginRotation = playerCam.rotation;
     }
 
     public void RestoreCamera()

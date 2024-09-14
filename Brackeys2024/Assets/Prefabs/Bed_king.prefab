@@ -306,7 +306,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2844556103059980910}
   - component: {fileID: 702949031209265766}
-  - component: {fileID: 890303268626780620}
   m_Layer: 0
   m_Name: Bed_king
   m_TagString: Untagged
@@ -334,6 +333,8 @@ Transform:
   - {fileID: 7041161861913516954}
   - {fileID: 3108527617400005124}
   - {fileID: 6183576081397397772}
+  - {fileID: 4702723308868083523}
+  - {fileID: 8882235336022842580}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -186.60799, z: 0}
 --- !u!205 &702949031209265766
@@ -359,19 +360,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8986785819236556356}
   m_Enabled: 1
---- !u!114 &890303268626780620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3475498941218142700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f075b57d482e982b590deff009303dc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SleepCameraRoot: {fileID: 3951431075219486053}
 --- !u!1 &3951431075219486053
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,6 +601,105 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6, y: 0.15, z: 0.4}
   m_Center: {x: 0.000000014901161, y: -0.000000014901161, z: 0.000000007450581}
+--- !u!1 &7851247269515954953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8882235336022842580}
+  - component: {fileID: 1945026855452038795}
+  - component: {fileID: 8337511878149003568}
+  m_Layer: 0
+  m_Name: Sleep Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8882235336022842580
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851247269515954953}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.96, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2844556103059980910}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1945026855452038795
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851247269515954953}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.560503, y: 0.17444968, z: 1.7487154}
+  m_Center: {x: 0.012405038, y: -0.20334351, z: -0.058396876}
+--- !u!114 &8337511878149003568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851247269515954953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f075b57d482e982b590deff009303dc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SleepCameraRoot: {fileID: 3951431075219486053}
+  SleepCameraRootTemp: {fileID: 8502955605842695674}
+--- !u!1 &8502955605842695674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4702723308868083523}
+  m_Layer: 0
+  m_Name: Camera Lock Position (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4702723308868083523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502955605842695674}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.275, z: 0.275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2844556103059980910}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9111360962675481942
 GameObject:
   m_ObjectHideFlags: 0
