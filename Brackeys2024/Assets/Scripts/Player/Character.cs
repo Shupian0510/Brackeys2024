@@ -29,6 +29,7 @@ public class Character : MonoBehaviour
 
     public MoveStateEnum MoveState { get; private set; } = MoveStateEnum.Idle;
     public RemovableObject GrabbingObject { get; set; }
+    NormalInteractObj currentInteractable;
 
     private CharacterController controller;
     private Transform playerCam;
@@ -125,15 +126,35 @@ public class Character : MonoBehaviour
         var ray = new Ray(playerCam.position, playerCam.forward);
         if (Physics.Raycast(ray, out var hitInfo, InteractDistanceLimit))
         {
+            if(hitInfo.collider.tag == "Interactable") {
+                NormalInteractObj newInteractable = hitInfo.collider.GetComponent<NormalInteractObj>();
+
+                if(currentInteractable && newInteractable != currentInteractable) {
+                    currentInteractable.DisableOutline();
+                }
+                if (newInteractable.enabled) {
+                    SetNewCurrentInteractable(newInteractable);
+                }
+                else {
+                    DisableCurrentInteractable();
+                }
+
+            }
+            else {
+                DisableCurrentInteractable();
+            }
             // Invoke 'look at' event
             OnPlayerLookingAt?.Invoke(this, hitInfo.transform);
 
             // Invoke 'interact' event
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && currentInteractable != null)
             {
+                currentInteractable.Interact();
+                
+            }
+            else if (Input.GetMouseButtonDown(0)){
                 OnPlayerInteract?.Invoke(this, hitInfo.transform);
             }
-
             // Update interaction text (of UI)
             if (
                 InteractionText.Instance != null
@@ -148,6 +169,9 @@ public class Character : MonoBehaviour
                 InteractionText.Instance.Show = false;
             }
         }
+        else {
+            DisableCurrentInteractable();
+        }
 
         // Handle dropping item
         if (GrabbingObject != null && Input.GetKey(KeyCode.Q))
@@ -157,6 +181,17 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void SetNewCurrentInteractable(NormalInteractObj newInteractable) {
+        currentInteractable = newInteractable;
+        currentInteractable.EnableOutline();
+    }
+
+    public void DisableCurrentInteractable() {
+        if(currentInteractable) {
+        currentInteractable.DisableOutline();
+        currentInteractable = null;
+        }
+    }
     public void LockCamera(Transform target)
     {
         if (!lockCamera)
