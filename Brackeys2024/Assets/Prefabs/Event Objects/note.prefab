@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5174306667360567163
 Transform:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -283,14 +283,100 @@ PrefabInstance:
       propertyPath: m_Name
       value: note
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7bd6b60762530a2468f5c23459679444, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7bd6b60762530a2468f5c23459679444, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5174306667360567163}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7bd6b60762530a2468f5c23459679444, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3817479917522782907}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7bd6b60762530a2468f5c23459679444, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8078135969313009825}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7bd6b60762530a2468f5c23459679444, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2731140001157108873}
   m_SourcePrefab: {fileID: 100100000, guid: 7bd6b60762530a2468f5c23459679444, type: 3}
+--- !u!1 &112246664110459010 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7bd6b60762530a2468f5c23459679444, type: 3}
+  m_PrefabInstance: {fileID: 959177037041104339}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3817479917522782907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112246664110459010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.8867924, g: 0.5283282, b: 0.08533284, a: 1}
+  outlineWidth: 3.41
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &8078135969313009825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112246664110459010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1252bbb7d374b1e42ab83c0246db7728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: 
+  onInteraction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameFunctions, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 1b8a5ddf49ecd88449e84dddb98337fb, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!64 &2731140001157108873
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112246664110459010}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4414471651703448347, guid: 7bd6b60762530a2468f5c23459679444, type: 3}
 --- !u!4 &776051883700032056 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7bd6b60762530a2468f5c23459679444, type: 3}
