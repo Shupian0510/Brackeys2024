@@ -21,7 +21,8 @@ public class StoryFlowControl : MonoBehaviour
     {
         if (state == 1 && !StorySystem.HasAudioInQueue())
         {
-            //开头语结束之后，日记启动
+            //开头语结束之后，日记启动,可以起床
+            Bed.Instance.GetUpLock = false;
             journal.GetComponent<Journal>().ActiveOn();
         }
         else if (state == 2 && !StorySystem.HasAudioInQueue())
@@ -107,8 +108,8 @@ public class StoryFlowControl : MonoBehaviour
     }
 
     public static void startvoice() {
-        StorySystem.PlayStoryAudio("beg1");
-        StorySystem.PlayStoryAudio("beg2");
+        //StorySystem.PlayStoryAudio("beg1");
+        //StorySystem.PlayStoryAudio("beg2");
         state = 1;
         //test
     }

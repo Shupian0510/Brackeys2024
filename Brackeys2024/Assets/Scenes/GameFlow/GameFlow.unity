@@ -2515,7 +2515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 776051883700032056, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.806
+      value: -9.182
       objectReference: {fileID: 0}
     - target: {fileID: 776051883700032056, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2557,6 +2557,34 @@ PrefabInstance:
       propertyPath: notebookUI
       value: 
       objectReference: {fileID: 1960066529}
+    - target: {fileID: 8078135969313009825, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+      propertyPath: onInteraction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8078135969313009825, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+      propertyPath: onInteraction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8078135969313009825, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+      propertyPath: onInteraction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1945425266}
+    - target: {fileID: 8078135969313009825, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+      propertyPath: onInteraction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8078135969313009825, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+      propertyPath: onInteraction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleNotebook
+      objectReference: {fileID: 0}
+    - target: {fileID: 8078135969313009825, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+      propertyPath: onInteraction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: noteUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8078135969313009825, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+      propertyPath: onInteraction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2805,9 +2833,9 @@ RectTransform:
   m_Father: {fileID: 1960066530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5272443}
-  m_AnchoredPosition: {x: -31, y: 5}
-  m_SizeDelta: {x: 444.6104, y: 342.922}
+  m_AnchorMax: {x: 0.513, y: 0.5}
+  m_AnchoredPosition: {x: 110, y: 22}
+  m_SizeDelta: {x: 242.6991, y: 377.64172}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1515170532
 MonoBehaviour:
@@ -2829,7 +2857,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Today my doctor will come
+  m_text: "Date:Sep 14th 2024\nToday was another challenging day. The anxiety hit
+    me hard this morning, right after I woke up. My heart was racing, and I felt
+    a tightness in my chest that wouldn\u2019t go away. \n\r\nI tried to distract
+    myself by focusing on work, but the thoughts kept creeping in. Everything in
+    the house just go insane. Today is the day doctor will come and give me medicine.
+    Hope he can help me...\n\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 92bfd140b444a3f45856f887b36b17f6, type: 2}
   m_sharedMaterial: {fileID: 8861040866690692708, guid: 92bfd140b444a3f45856f887b36b17f6, type: 2}
@@ -2856,10 +2889,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 26.35
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2892,7 +2925,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -186.0517, y: 7.324768, z: 35.160583, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3610,7 +3643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1940307393
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3749,6 +3782,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 776051883700032056, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
   m_PrefabInstance: {fileID: 1407102703}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1945425266 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1583792162236075540, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+  m_PrefabInstance: {fileID: 1407102703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945425258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050595520f6b8a34f9a247888d424cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1960066529
 GameObject:
   m_ObjectHideFlags: 0
@@ -3784,7 +3828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.5589, y: -35.1033}
+  m_AnchoredPosition: {x: 5.5589, y: -16}
   m_SizeDelta: {x: -508.88, y: 70.2066}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1960066531
@@ -4898,6 +4942,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f075b57d482e982b590deff009303dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ForceSleepAtStart: 1
+  GetUpLock: 1
   SleepCameraRoot: {fileID: 3951431075522607945}
   SleepCameraRootTemp: {fileID: 8502955605541575638}
 --- !u!1 &8502955605541575638

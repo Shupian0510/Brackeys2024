@@ -6,7 +6,6 @@ public class Journal : MonoBehaviour, IInteractive
 {
     private AudioSource audio;
     private bool active = false;
-
     // 根据响铃状态自动变更的互动文字
     public string GetInteractText() => active ? "Journal" : "";
 
