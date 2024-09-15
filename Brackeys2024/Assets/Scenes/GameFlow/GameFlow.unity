@@ -541,6 +541,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad09e236401133448a7314936cfa9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audio: {fileID: 0}
+  active: 0
 --- !u!82 &414301963
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2554,9 +2556,17 @@ PrefabInstance:
       value: 359.999
       objectReference: {fileID: 0}
     - target: {fileID: 1583792162236075540, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+      propertyPath: phone
+      value: 
+      objectReference: {fileID: 216895485}
+    - target: {fileID: 1583792162236075540, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
       propertyPath: notebookUI
       value: 
       objectReference: {fileID: 1960066529}
+    - target: {fileID: 2814974296391398910, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8078135969313009825, guid: 4369fd28fde606e4387d1f5b2c54c7d2, type: 3}
       propertyPath: onInteraction.m_PersistentCalls.m_Calls.Array.size
       value: 1

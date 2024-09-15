@@ -28,7 +28,7 @@ public class StoryFlowControl : MonoBehaviour
         else if (state == 2 && !StorySystem.HasAudioInQueue())
         {
             //看完日记之后电话响起，等待接通之后对话之后进入第一阶段
-            phone.GetComponent<Phone>().ActiveOn();
+            //phone.GetComponent<Phone>().ActiveOn();
             state = -1;
         }
         else if (state == 4 && !StorySystem.HasAudioInQueue())
