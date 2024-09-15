@@ -7,7 +7,7 @@ public class Bed : MonoBehaviour, IInteractive
     public static Bed Instance { get; private set; }
 
     public bool ForceSleepAtStart = true;
-    public bool GetUpLock = false;
+    public bool GetUpLock = true;
     public GameObject SleepCameraRoot;
     public GameObject SleepCameraRootTemp;
 
