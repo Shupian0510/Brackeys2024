@@ -8,6 +8,8 @@ public class EventAlarmParent : EventObject
 
     private List<EventAlarm> alarms;
 
+    public override string GetInteractText() => "";
+
     private void Start()
     {
         AlarmObjectList.ForEach(x => x.AddComponent<EventAlarm>());
