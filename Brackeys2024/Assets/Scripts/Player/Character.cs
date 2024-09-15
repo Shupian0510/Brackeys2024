@@ -218,12 +218,17 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void LockCamera(Transform target)
+    public void LockCamera(Transform target, bool instantly = false)
     {
         if (!lockCamera)
         {
             cameraOriginPosition = playerCam.position;
             cameraOriginRotation = playerCam.rotation;
+
+            if (instantly)
+            {
+                playerCam.SetPositionAndRotation(target.position, target.rotation);
+            }
         }
         lockCamera = true;
         cameraTarget = target;

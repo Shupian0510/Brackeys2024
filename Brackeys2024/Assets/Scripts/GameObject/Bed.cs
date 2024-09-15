@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Bed : MonoBehaviour, IInteractive
 {
+    public static Bed Instance { get; private set; }
+
+    public bool ForceSleepAtStart = true;
+    public bool GetUpLock = false;
     public GameObject SleepCameraRoot;
     public GameObject SleepCameraRootTemp;
 
@@ -12,9 +16,10 @@ public class Bed : MonoBehaviour, IInteractive
     private bool sleeping = false;
     private Character player;
 
+    private void Awake() => Instance = this;
+
     private void Start()
     {
-
         Character.OnPlayerInteract += (player, trans) =>
         {
             if (trans == transform && !sleeping)
@@ -25,8 +30,9 @@ public class Bed : MonoBehaviour, IInteractive
                 Invoke(nameof(ToggleState), 2f);
 
                 Debug.Log("SLEEP");
-                
-                if (StoryFlowControl.state == 7) { 
+
+                if (StoryFlowControl.state == 7)
+                {
                     StoryFlowControl.state = 8;
                 }
                 if (StoryFlowControl.state == 13)
@@ -35,16 +41,28 @@ public class Bed : MonoBehaviour, IInteractive
                 }
             }
         };
+        if (ForceSleepAtStart)
+        {
+            Invoke(nameof(SleepAtStart), 0.1f);
+        }
     }
 
     private void Update()
     {
-        if (sleeping && Input.anyKeyDown)
+        if (sleeping && Input.GetKeyDown(KeyCode.Space) && !GetUpLock)
         {
             LockOnTemp();
             Invoke(nameof(Unlock), 1f);
             Invoke(nameof(ToggleState), 1f);
         }
+    }
+
+    private void SleepAtStart()
+    {
+        player = Character.Instance;
+        Character.Instance.LockCamera(SleepCameraRoot.transform, true);
+        // LockOnRoot();
+        ToggleState();
     }
 
     private void LockOnRoot() => player.LockCamera(SleepCameraRoot.transform);
