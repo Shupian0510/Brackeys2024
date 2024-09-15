@@ -59,7 +59,11 @@ public class EventManager : MonoBehaviour
             eventTimer += RandomInterval;
             if (CanHappened)
             {
-                eventObjects[Random.Range(0, eventObjects.Count)].SetEventOn();
+                var list = eventObjects
+                    .Where(x => x.gameObject.activeInHierarchy && !x.IsEventOn)
+                    .ToList();
+
+                list[Random.Range(0, list.Count)].SetEventOn();
             }
             else { }
         }

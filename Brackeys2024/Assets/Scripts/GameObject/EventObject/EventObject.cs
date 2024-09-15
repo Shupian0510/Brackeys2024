@@ -9,7 +9,7 @@ public class EventObject : MonoBehaviour, IInteractive
     public event UnityAction OnHandleEvent;
 
     private bool eventOn = false;
-    public bool IsEventOn => eventOn;
+    public bool IsEventOn => eventOn && gameObject.activeInHierarchy;
 
     private float startTime = -1;
     public float RemainingTime => Time.time - startTime;
