@@ -31,10 +31,10 @@ public class Journal : MonoBehaviour, IInteractive {
 
     private void Update() {
         // 检查是否按下了 ESC 键
-        if (Input.GetKeyDown(KeyCode.Escape) && isNotebookOpen) {
+        if (Input.GetKeyDown(KeyCode.Space) && isNotebookOpen) {
             // 切换笔记本 UI 的状态
             ToggleNotebook();
-            phone.GetComponent<Phone>().ActiveOn();
+            if(StoryFlowControl.state == -1) phone.GetComponent<Phone>().ActiveOn();
         }
     }
 

@@ -24,7 +24,7 @@ public class PillRand : MonoBehaviour, IInteractive
     private void Oninteract()
     {
         //Calm Down
-        StressManager.Instance.CalmDown(StressManager.Instance.Stress * 0.5f);
+        StressManager.Instance.CalmDown(0.2f);
 
         gameObject.SetActive(false);
         MedManager.Instance.UseMedicine();

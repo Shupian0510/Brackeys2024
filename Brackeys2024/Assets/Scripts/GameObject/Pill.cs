@@ -30,6 +30,8 @@ public class Pill : MonoBehaviour, IInteractive
         
         gameObject.SetActive(false);
 
+        TaskManager.Instance.RemoveTaskByName("Find Pill in Bathroom");
+
         StoryFlowControl.state = 7;
 
     }

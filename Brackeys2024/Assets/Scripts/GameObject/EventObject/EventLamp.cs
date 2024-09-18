@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 // 直接继承 EventObject (可以直接访问成员函数)
@@ -13,6 +14,7 @@ public class EventLamp : EventObject
     private new Renderer renderer;
     private new AudioSource audio;
     private bool isPlaying = false;
+    private bool taskcheck = false;
 
     private void Start()
     {
@@ -27,6 +29,8 @@ public class EventLamp : EventObject
                 // 这里相当于是让「事件取消的时机」由「事件物体本身」进行控制
                 // 也可以不监听此事件，在 Update 中合适的时机进行取消
                 SetEventOff(2);
+                TaskManager.Instance.RemoveTaskByName("Turn off Lamp");
+                
             }
         };
 
@@ -37,12 +41,21 @@ public class EventLamp : EventObject
 
     private void Update()
     {
+        if (!taskcheck && IsEventOn) {
+            TaskManager.Instance.AddTask(new Task("Turn off Lamp", "Go find the Lamp and turn it off"));
+            taskcheck = true;
+        }
+        if (!IsEventOn) {
+            taskcheck = false;
+            TaskManager.Instance.RemoveTaskByName("Turn off Lamp");
+        }
         timer += Time.deltaTime;
         if (timer >= BlinkInterval)
         {
             RandomBlink();
             timer = 0f;
         }
+
     }
 
     private void RandomBlink()
@@ -74,6 +87,7 @@ public class EventLamp : EventObject
                 isPlaying = true;
             }
             Spotlight.SetActive(true);
+            
             renderer.material.EnableKeyword("_EMISSION");
         }
     }

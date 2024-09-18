@@ -23,6 +23,7 @@ public class EventAlarmParent : EventObject
             {
                 var target = alarms[Random.Range(0, alarms.Count)];
                 target.Ringing = true;
+                TaskManager.Instance.AddTask(new Task("Find Alarm", "Go find alarm and turn it off"));
             }
         };
 

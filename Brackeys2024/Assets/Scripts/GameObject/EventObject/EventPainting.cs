@@ -28,9 +28,11 @@ public class EventPainting : EventObject
             painting.HideInteractText = false;
             painting.Locked = false;
             painting.Drop();
+            TaskManager.Instance.AddTask(new Task("Pick Painting", "Go find the dropped painting"));
             StorySystem.NotReplayable(AudioPaintingFall);
             StorySystem.PlayStoryAudio(AudioPaintingFall);
             dialogueSpeaker.playDialogue();
+            
         };
         // 玩家手持画并且点击触发框时，把画挂回去
         Character.OnPlayerInteract += (player, trans) =>
@@ -43,6 +45,12 @@ public class EventPainting : EventObject
                 painting.Restore();
                 StorySystem.NotReplayable(AudioPaintingPick);
                 StorySystem.PlayStoryAudio(AudioPaintingPick);
+                TaskManager.Instance.RemoveTaskByName("Pick Painting");
+
+                if (StoryFlowControl.state == -2) { 
+                    StoryFlowControl.state = 5;
+                    StoryFlowControl.Instance.stage0off();
+                }
             }
         };
         // 每次画被重置（被挂回去）时取消事件

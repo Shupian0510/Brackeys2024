@@ -16,6 +16,7 @@ public class EventComputer : EventObject
         OnEventHappening += () =>
         {
             renderer.material.EnableKeyword("_EMISSION");
+            TaskManager.Instance.AddTask(new Task("Turn off Computer", "Go find the computer and turn it off"));
             audio.Play();
         };
         Character.OnPlayerInteract += (_, trans) =>
@@ -23,6 +24,7 @@ public class EventComputer : EventObject
             if (trans == transform)
             {
                 SetEventOff(2);
+                TaskManager.Instance.RemoveTaskByName("Turn off Computer");
             }
         };
         OnHandleEvent += () => renderer.material.DisableKeyword("_EMISSION");

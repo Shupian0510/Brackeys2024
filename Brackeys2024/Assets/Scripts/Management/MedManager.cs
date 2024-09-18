@@ -10,7 +10,7 @@ public class MedManager : MonoBehaviour
     public float respawnTime = 5f;   // 药品的刷新时间间隔
 
     private Transform[] medicines;    // 存储所有子对象（药品）
-    public float calmvalue = 0.3f;
+    public float calmvalue = 0.2f;
 
     void Start()
     {

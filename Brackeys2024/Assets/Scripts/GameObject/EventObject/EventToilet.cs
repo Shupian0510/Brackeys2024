@@ -15,6 +15,7 @@ public class EventToilet : EventObject
             if (IsEventOn && trans == transform)
             {
                 SetEventOff(2);
+                TaskManager.Instance.RemoveTaskByName("Stop Toilet");
             }
         };
         OnHandleEvent += () =>
@@ -31,6 +32,7 @@ public class EventToilet : EventObject
         if (!isplaying && IsEventOn)
         {
             audio.Play();
+            TaskManager.Instance.AddTask(new Task("Stop Toilet", "Go find the Toilet and stop it"));
             isplaying = true;
         }
         var rot = transform.localEulerAngles;
